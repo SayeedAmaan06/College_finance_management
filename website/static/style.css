@@ -1,0 +1,92 @@
+body {
+    background-color:#ffff;
+  }
+  .navbar{
+    background-color: #F0F4F6;
+    height: 80px;
+    margin: 10px;
+    border-radius: 6px;
+    padding: 0.5rem;
+  }
+  .navbar-toggler {
+    border: none;
+    font-size: 1.25rem;
+  }
+  .navbar-toggler:focus, .btn-close:focus{
+    box-shadow: none;
+    outline: none;
+  }
+  .nav-link{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: medium;
+    color: #666666;
+    font-weight: 600;
+    position: relative;
+  }
+  .nav-link:hover, .nav-link:active{
+    color: #222222;
+  }
+  
+  @media (min-width: 991px){
+  .nav-link::before{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background-color: indigo;
+    visibility: hidden;
+    transition: 0.3s ease-in-out;
+  }
+  .nav-link:hover::before, .nav-link.active::before{
+    width: 100%;
+    visibility: visible;
+  }
+  }
+  
+  .hero-section {
+    background-size: cover;
+    width: 100%;
+  
+  }
+  .hero-section .container {
+    height: 100vh;
+    z-index: 1;
+    position: relative;
+  }
+  .hero-section h1{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-size: 1.5em;
+    color:#222222;
+    position: relative;
+    top: 1vh;
+    right: 9vh;
+  }
+  .hero-section p{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.6em;
+  }
+  #trips {
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+  }
+  #AboutUs{
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+  }
+  #ContactUs{
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+  }
+  .sec {
+    padding-bottom: 7vh;
+  }
+  h3{
+    color: indigo;
+  }
+  
+#myForm{
+    background-color: #efefef;
+}
