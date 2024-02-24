@@ -11,6 +11,7 @@ def upload_form():
 @app.route('/upload', methods=['POST'])
 def upload():
     if request.method == 'POST':
+        usn = request.form['usn']
         image = request.files['image']
         filename = image.filename
         
@@ -28,9 +29,11 @@ def upload():
                 db_Info = connection.get_server_info()
                 print("Connected to MySQL Server version ", db_Info)
                 cursor = connection.cursor()
-                cursor.execute("INSERT INTO exam_fees (`serial_number`, `NAME`, `USN`, `SEM`, `DEPARTMENT`, `TRANSACTION _ID`, `PAID_EXAM_FEES`, `DATE`) VALUES (' ',' ',' ',' ',' ',%s,' ',%s)",(tnd[0],tnd[1]))
+                cursor.execute("INSERT INTO exam_fees (`serial_number`, `NAME`, `USN`, `SEM`, `DEPARTMENT`, `TRANSACTION _ID`, `PAID_EXAM_FEES`, `DATE`) VALUES (' ',' ',%s,' ',' ',%s,' ',%s)",(usn,tnd[0],tnd[1]))
                 connection.commit()
                 print("Record inserted successfully")
+                print(tnd)
+                print(usn)
 
         except Error as e:
             print("Error while connecting to MySQL", e)
