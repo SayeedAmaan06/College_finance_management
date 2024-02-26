@@ -22,6 +22,7 @@ def upload():
     def sqlupdate():
 
         tnd = pt(filename)
+        fetched_data = None
         try:
             connection = mysql.connector.connect(host="localhost",user="root", password = "",database = "college_finance_db" )
 
@@ -29,11 +30,16 @@ def upload():
                 db_Info = connection.get_server_info()
                 print("Connected to MySQL Server version ", db_Info)
                 cursor = connection.cursor()
-                cursor.execute("INSERT INTO exam_fees (`serial_number`, `NAME`, `USN`, `SEM`, `DEPARTMENT`, `TRANSACTION _ID`, `PAID_EXAM_FEES`, `DATE`) VALUES (' ',' ',%s,' ',' ',%s,' ',%s)",(usn,tnd[0],tnd[1]))
+               # Fetch the data from the 'college_and_hostel_fees' table
+                cursor.execute("SELECT NAME,BRANCH,SEM FROM college_and_hostel_fees WHERE USN= %s",(usn,))
+                fetched_data = cursor.fetchone()
+                # Insert the fetched data into the 'exam_fees' table
+                cursor.execute("INSERT INTO exam_fees (`serial_number`,`NAME`,`USN`,`DEPARTMENT`, `SEM`,`TRANSACTION _ID`, `PAID_EXAM_FEES`, `DATE`) VALUES (' ', %s, %s, %s, %s,%s,' ',%s)",(fetched_data[0],usn,fetched_data[1],fetched_data[2],tnd[0],tnd[1]))
                 connection.commit()
                 print("Record inserted successfully")
                 print(tnd)
                 print(usn)
+                print(fetched_data)
 
         except Error as e:
             print("Error while connecting to MySQL", e)
