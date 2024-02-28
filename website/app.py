@@ -2,6 +2,7 @@ from flask import Flask, request, redirect, render_template
 from test1 import pytest as pt
 import mysql.connector
 from mysql.connector import Error
+from amount import recognize_text as rt
 
 app = Flask(__name__)
 
@@ -14,7 +15,6 @@ def upload():
         usn = request.form['usn']
         image = request.files['image']
         filename = image.filename
-        
         image.save(filename)
         print("uploaded")
     
@@ -22,6 +22,7 @@ def upload():
     def sqlupdate():
 
         tnd = pt(filename)
+        amt = rt(filename)
         fetched_data = None
         try:
             connection = mysql.connector.connect(host="localhost",user="root", password = "",database = "college_finance_db" )
@@ -34,7 +35,7 @@ def upload():
                 cursor.execute("SELECT NAME,BRANCH,SEM FROM college_and_hostel_fees WHERE USN= %s",(usn,))
                 fetched_data = cursor.fetchone()
                 # Insert the fetched data into the 'exam_fees' table
-                cursor.execute("INSERT INTO exam_fees (`serial_number`,`NAME`,`USN`,`DEPARTMENT`, `SEM`,`TRANSACTION _ID`, `PAID_EXAM_FEES`, `DATE`) VALUES (' ', %s, %s, %s, %s,%s,' ',%s)",(fetched_data[0],usn,fetched_data[1],fetched_data[2],tnd[0],tnd[1]))
+                cursor.execute("INSERT INTO exam_fees (`serial_number`,`NAME`,`USN`,`DEPARTMENT`, `SEM`,`TRANSACTION _ID`, `PAID_EXAM_FEES`, `DATE`) VALUES (' ', %s, %s, %s, %s,%s,%s,%s)",(fetched_data[0],usn,fetched_data[1],fetched_data[2],tnd[0],amt,tnd[1]))
                 connection.commit()
                 print("Record inserted successfully")
                 print(tnd)
